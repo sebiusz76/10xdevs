@@ -44,20 +44,20 @@ One-time setup required **before Phase 0**. Both CLIs are already project devDep
 
 ### A. Tooling baseline
 
-- [ ] Node `22.14.0` (`.nvmrc`) — `nvm use` (or install that version); npm ships with it.
-- [ ] `npm install` once so the `wrangler` and `supabase` binaries resolve via `npx`.
+- [x] Node `22.14.0` (`.nvmrc`) — `nvm use` (or install that version); npm ships with it.
+- [x] `npm install` once so the `wrangler` and `supabase` binaries resolve via `npx`.
 - [ ] Docker Desktop running — required **only** if you run the local Supabase stack (`supabase start`); not needed if local dev points at the hosted project.
 
 ### B. Cloudflare / wrangler CLI
 
-- [ ] `npx wrangler login` → browser OAuth; authorizes the CLI against your Cloudflare account.
-- [ ] `npx wrangler whoami` → confirm email + account. **If you have multiple accounts**, pin the target: set `CLOUDFLARE_ACCOUNT_ID` (env var) or add `"account_id": "<id>"` to `wrangler.jsonc`, otherwise `wrangler` may pick the wrong one.
+- [x] `npx wrangler login` → browser OAuth; authorizes the CLI against your Cloudflare account. **Done** — logged in via OAuth token (sstachurski@gmail.com).
+- [x] `npx wrangler whoami` → confirm email + account. **Done** — account `sebiusz` (`edfe340ba20304bf394d478e9dc3f218`). Single account, no pinning needed.
 - [ ] Dashboard → Workers & Pages → Account → **Subdomain**: ensure a `*.workers.dev` subdomain is registered — the first deploy fails without one.
 - Note: deploy auth for **Workers Builds** is handled by the Cloudflare GitHub app (Phase 6), so no `CLOUDFLARE_API_TOKEN` is needed here. A token is only required if you later script non-interactive `wrangler deploy` outside Builds.
 
 ### C. Supabase — hosted project (production)
 
-- [ ] Create (or identify) the hosted project at supabase.com — it supplies the values used as Worker secrets.
+- [x] Create (or identify) the hosted project at supabase.com — it supplies the values used as Worker secrets.
 - [ ] Settings → API → copy **Project URL** → `SUPABASE_URL`, and the **anon / publishable** key → `SUPABASE_KEY`. Do **not** use the service-role/secret key (the cookie-SSR pattern needs the public anon key).
 - [ ] Note the **project ref** (the subdomain in the URL, e.g. `abcdefgh`) for linking the CLI below.
 - These values feed Phase 2 (`wrangler secret put`) and the hosted Auth-URL alignment in Phase 3.
